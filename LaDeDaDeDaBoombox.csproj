@@ -78,8 +78,41 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Assets\song.wav" />
-      <EmbeddedResource Include="Assets\song.wav" />
+      <None Remove="Assets\RC.wav" />
+      <None Remove="Assets\RWS.wav" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\RC.ogg" />
+      <EmbeddedResource Include="Assets\RC.ogg" />
+      <None Remove="Assets\RWS.ogg" />
+      <EmbeddedResource Include="Assets\RWS.ogg" />
+      <None Remove="Assets\BC.ogg" />
+      <EmbeddedResource Include="Assets\BC.ogg" />
+      <None Remove="Assets\BT.ogg" />
+      <EmbeddedResource Include="Assets\BT.ogg" />
+      <None Remove="Assets\BWNB.ogg" />
+      <EmbeddedResource Include="Assets\BWNB.ogg" />
+      <None Remove="Assets\DOATM.ogg" />
+      <EmbeddedResource Include="Assets\DOATM.ogg" />
+      <None Remove="Assets\E.ogg" />
+      <EmbeddedResource Include="Assets\E.ogg" />
+      <None Remove="Assets\EF.ogg" />
+      <EmbeddedResource Include="Assets\EF.ogg" />
+      <None Remove="Assets\G.ogg" />
+      <EmbeddedResource Include="Assets\G.ogg" />
+      <None Remove="Assets\LF.ogg" />
+      <EmbeddedResource Include="Assets\LF.ogg" />
+      <None Remove="Assets\NBTC.ogg" />
+      <EmbeddedResource Include="Assets\NBTC.ogg" />
+      <None Remove="Assets\PG.ogg" />
+      <EmbeddedResource Include="Assets\PG.ogg" />
+      <None Remove="Assets\PPP.ogg" />
+      <EmbeddedResource Include="Assets\PPP.ogg" />
+      <None Remove="Assets\SOM.ogg" />
+      <EmbeddedResource Include="Assets\SOM.ogg" />
+      <None Remove="Assets\T.ogg" />
+      <EmbeddedResource Include="Assets\T.ogg" />
     </ItemGroup>
 </Project>
 

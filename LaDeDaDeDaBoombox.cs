@@ -1,9 +1,11 @@
 using System.Collections;
 using HarmonyLib;
 using System.IO;
+using System.Linq;
 using BepInEx;
 using UnityEngine;
 using System.Reflection;
+using UnityEngine.Networking;
 
 public class ModMain
 {
@@ -38,41 +40,71 @@ class LaDeDaDeDaBoomboxPatch
     static void Postfix(BoomboxItem __instance, bool startMusic)
     {
         if (!startMusic) return;
-        
-        __instance.StartCoroutine(LoadEmbeddedWavAndSetClip(__instance));
+        __instance.boomboxAudio.Stop();
+        __instance.boomboxAudio.clip = null;
+        __instance.StartCoroutine(LoadRandomEmbeddedSong(__instance));
     }
-
-    static IEnumerator LoadEmbeddedWavAndSetClip(BoomboxItem boombox)
+    
+    
+    static IEnumerator LoadRandomEmbeddedSong(BoomboxItem boombox)
     {
         var assembly = Assembly.GetExecutingAssembly();
-        var resourceName = "LaDeDaDeDaBoombox.Assets.song.wav"; 
+        string prefix = "LaDeDaDeDaBoombox.Assets.";
 
-        byte[] wavBytes;
-        using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+        // Cache directory inside plugin folder
+        string cacheDir = Path.Combine(Paths.PluginPath, "cached_songs");
+        Directory.CreateDirectory(cacheDir);
+        
+        var songs = assembly.GetManifestResourceNames()
+            .Where(name => name.StartsWith(prefix) && name.EndsWith(".ogg"))
+            .ToArray();
+
+        if (songs.Length == 0)
         {
-            if (stream == null)
-            {
-                Debug.LogError($"Embedded WAV resource '{resourceName}' not found!");
-                yield break;
-            }
-            wavBytes = new byte[stream.Length];
-            stream.Read(wavBytes, 0, wavBytes.Length);
+            Debug.LogWarning("No embedded songs found!");
+            yield break;
         }
 
-        // Use WavUtility to convert bytes into an AudioClip
-        AudioClip clip = WavUtility.ToAudioClip(wavBytes, 0, "EmbeddedSong");
+        // pick ogg file randomly
+        string chosenResource = songs[UnityEngine.Random.Range(0, songs.Length)];
+        string songFileName = chosenResource.Substring(prefix.Length); // e.g., "mysong.ogg"
+        string cachedPath = Path.Combine(cacheDir, songFileName);
+        
+        if (!File.Exists(cachedPath))
+        {
+            Debug.Log($"Extracting embedded song to cache: {cachedPath}");
+            using var stream = assembly.GetManifestResourceStream(chosenResource);
+            if (stream == null)
+            {
+                Debug.LogError($"Failed to get stream for {chosenResource}");
+                yield break;
+            }
 
+            using var fileStream = File.Create(cachedPath);
+            stream.CopyTo(fileStream);
+        }
+        using var request = UnityWebRequestMultimedia.GetAudioClip("file://" + cachedPath, AudioType.OGGVORBIS);
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Failed to load audio clip: " + request.error);
+            yield break;
+        }
+
+        AudioClip clip = DownloadHandlerAudioClip.GetContent(request);
         if (clip == null)
         {
-            Debug.LogError("Failed to convert embedded WAV bytes to AudioClip!");
+            Debug.LogError("Failed to decode audio clip");
             yield break;
         }
 
         boombox.boomboxAudio.clip = clip;
         boombox.boomboxAudio.Play();
 
-        Debug.Log("Embedded audio loaded and playing!");
-
-        yield return null;
+        Debug.Log($"Playing cached song: {songFileName}");
     }
+
+
+
 }

@@ -76,6 +76,11 @@
             <HintPath>G:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
         </Reference>
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\song.wav" />
+      <EmbeddedResource Include="Assets\song.wav" />
+    </ItemGroup>
 </Project>
 
 

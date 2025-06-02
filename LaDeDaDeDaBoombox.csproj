@@ -7,7 +7,6 @@
         <!-- Change to whatever version you're currently on. -->
         <Version>1.0.0</Version>
     </PropertyGroup><ItemGroup>
-  <None Include="Assets\Resources\**\*" CopyToOutputDirectory="PreserveNewest" />
 </ItemGroup>
 
     <!-- Project Properties -->
@@ -63,10 +62,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="song.mp3" />
-    </ItemGroup>
-
-    <ItemGroup>
         <!-- Game DLLs -->
         <Reference Include="Assembly-CSharp">
             <HintPath>G:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
@@ -80,11 +75,6 @@
         <Reference Include="UnityEngine.AudioModule">
             <HintPath>G:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
         </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="song.wav" />
-      <EmbeddedResource Include="song.wav" />
     </ItemGroup>
 </Project>
 

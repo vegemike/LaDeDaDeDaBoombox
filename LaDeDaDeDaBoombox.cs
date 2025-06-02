@@ -43,8 +43,7 @@ class LaDeDaDeDaBoomboxPatch
             Debug.LogWarning($"Custom song not found at: {path}");
             return;
         }
-
-        // Run Unity coroutine to load clip asynchronously
+        
         __instance.StartCoroutine(LoadAndSetClip(__instance, path));
     }
 

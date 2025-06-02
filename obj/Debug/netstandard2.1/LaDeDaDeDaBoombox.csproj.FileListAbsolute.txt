@@ -1,9 +1,0 @@
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.csproj.AssemblyReference.cache
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\MyPluginInfo.cs
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.AssemblyInfoInputs.cache
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.AssemblyInfo.cs
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.csproj.CoreCompileInputs.cache
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\bin\Debug\netstandard2.1\vegemike.LaDeDaDeDaBoombox.deps.json
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\bin\Debug\netstandard2.1\vegemike.LaDeDaDeDaBoombox.dll
-C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\vegemike.LaDeDaDeDaBoombox.dll

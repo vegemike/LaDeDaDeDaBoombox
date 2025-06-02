@@ -1,4 +1,4 @@
-If you hate my music taste which is fair and want YOUR OWN SONGS on the radio it's almost straightforward
+If you hate my music taste which is fair and want YOUR OWN SONGS on the radio it's almost straightforward \n
 You need:
 Some IDE
 Competence

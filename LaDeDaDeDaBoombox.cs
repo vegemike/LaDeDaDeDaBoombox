@@ -1,35 +1,57 @@
-using System.Collections;
-using HarmonyLib;
-using System.IO;
-using System.Linq;
 using BepInEx;
-using UnityEngine;
+using HarmonyLib;
 using System.Reflection;
-using UnityEngine.Networking;
+using Unity.Netcode;
+using UnityEngine;
 
-public class ModMain
-{
-    public static void Init()
-    {
-        var assembly = Assembly.GetExecutingAssembly();
-        foreach (var name in assembly.GetManifestResourceNames())
-        {
-            Debug.Log("Embedded resource: " + name);
-        }
-
-        var harmony = new Harmony("com.vegemike.LaDeDaDeDaBoombox");
-        Harmony.CreateAndPatchAll(typeof(LaDeDaDeDaBoomboxPatch));
-
-        Debug.Log("Harmony patch applied to BoomboxItem.StartMusic");
-    }
-}
-
-[BepInEx.BepInPlugin("com.vegemike.LaDeDaDeDaBoombox", "Boombox Patch", "1.0.0")]
+[BepInPlugin("com.vegemike.LaDeDaDeDaBoombox", "Boombox Patch", "1.0.0")]
 public class BoomboxMod : BaseUnityPlugin
 {
     private void Awake()
     {
         ModMain.Init();
+        Debug.Log("[BoomboxMod] Plugin Awake");
+    }
+}
+
+public static class ModMain
+{
+    public static Harmony harmony;
+
+    public static void Init()
+    {
+        harmony = new Harmony("com.vegemike.LaDeDaDeDaBoombox");
+        harmony.PatchAll(Assembly.GetExecutingAssembly());
+        Debug.Log("[ModMain] Harmony patches applied for LaDeDaDeDaBoombox.");
+    }
+}
+
+[HarmonyPatch(typeof(StartOfRound), "Awake")]
+public static class InjectBoomboxSyncManager
+{
+    [HarmonyPostfix]
+    public static void Postfix()
+    {
+        if (BoomboxSyncManager.Instance == null)
+        {
+            Debug.Log("[InjectBoomboxSyncManager] Creating BoomboxSyncManager GameObject");
+            GameObject go = new GameObject("BoomboxSyncManager");
+            
+            // Add NetworkObject first
+            var netObj = go.AddComponent<NetworkObject>();
+            var syncMgr = go.AddComponent<BoomboxSyncManager>();
+            Object.DontDestroyOnLoad(go);
+
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+            {
+                netObj.Spawn();
+                Debug.Log("[InjectBoomboxSyncManager] BoomboxSyncManager spawned on server");
+            }
+            else
+            {
+                Debug.Log("[InjectBoomboxSyncManager] NetworkManager not ready or not server; delaying spawn until server");
+            }
+        }
     }
 }
 
@@ -40,71 +62,25 @@ class LaDeDaDeDaBoomboxPatch
     static void Postfix(BoomboxItem __instance, bool startMusic)
     {
         if (!startMusic) return;
+
+        // Stop default playback immediately
         __instance.boomboxAudio.Stop();
-        __instance.boomboxAudio.clip = null;
-        __instance.StartCoroutine(LoadRandomEmbeddedSong(__instance));
+        Debug.Log("[LaDeDaDeDaBoomboxPatch] Boombox StartMusic triggered; default audio stopped");
+
+        if (NetworkManager.Singleton == null)
+        {
+            Debug.LogWarning("[LaDeDaDeDaBoomboxPatch] NetworkManager.Singleton is null; skipping sync");
+            return;
+        }
+
+        if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
+        {
+            Debug.Log("[LaDeDaDeDaBoomboxPatch] Running on host—calling HandleBoomboxStart");
+            BoomboxSyncManager.Instance.HandleBoomboxStart(__instance);
+        }
+        else
+        {
+            Debug.Log("[LaDeDaDeDaBoomboxPatch] Not host or server; skipping song selection");
+        }
     }
-    
-    
-    static IEnumerator LoadRandomEmbeddedSong(BoomboxItem boombox)
-    {
-        var assembly = Assembly.GetExecutingAssembly();
-        string prefix = "LaDeDaDeDaBoombox.Assets.";
-
-        // Cache directory inside plugin folder
-        string cacheDir = Path.Combine(Paths.PluginPath, "cached_songs");
-        Directory.CreateDirectory(cacheDir);
-        
-        var songs = assembly.GetManifestResourceNames()
-            .Where(name => name.StartsWith(prefix) && name.EndsWith(".ogg"))
-            .ToArray();
-
-        if (songs.Length == 0)
-        {
-            Debug.LogWarning("No embedded songs found!");
-            yield break;
-        }
-
-        // pick ogg file randomly
-        string chosenResource = songs[UnityEngine.Random.Range(0, songs.Length)];
-        string songFileName = chosenResource.Substring(prefix.Length); // e.g., "mysong.ogg"
-        string cachedPath = Path.Combine(cacheDir, songFileName);
-        
-        if (!File.Exists(cachedPath))
-        {
-            Debug.Log($"Extracting embedded song to cache: {cachedPath}");
-            using var stream = assembly.GetManifestResourceStream(chosenResource);
-            if (stream == null)
-            {
-                Debug.LogError($"Failed to get stream for {chosenResource}");
-                yield break;
-            }
-
-            using var fileStream = File.Create(cachedPath);
-            stream.CopyTo(fileStream);
-        }
-        using var request = UnityWebRequestMultimedia.GetAudioClip("file://" + cachedPath, AudioType.OGGVORBIS);
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError("Failed to load audio clip: " + request.error);
-            yield break;
-        }
-
-        AudioClip clip = DownloadHandlerAudioClip.GetContent(request);
-        if (clip == null)
-        {
-            Debug.LogError("Failed to decode audio clip");
-            yield break;
-        }
-
-        boombox.boomboxAudio.clip = clip;
-        boombox.boomboxAudio.Play();
-
-        Debug.Log($"Playing cached song: {songFileName}");
-    }
-
-
-
 }

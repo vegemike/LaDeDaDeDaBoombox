@@ -2960,13 +2960,13 @@
     "C:\\Users\\mikey\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "2.4.1",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mikey\\OneDrive\\Desktop\\lc modding\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox.csproj",
+      "projectUniqueName": "G:\\lc modding\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox.csproj",
       "projectName": "vegemike.LaDeDaDeDaBoombox",
-      "projectPath": "C:\\Users\\mikey\\OneDrive\\Desktop\\lc modding\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox.csproj",
+      "projectPath": "G:\\lc modding\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox.csproj",
       "packagesPath": "C:\\Users\\mikey\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mikey\\OneDrive\\Desktop\\lc modding\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\obj\\",
+      "outputPath": "G:\\lc modding\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\LaDeDaDeDaBoombox\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mikey\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -7,3 +7,12 @@ C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\L
 C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.AssemblyInfo.cs
 C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.csproj.CoreCompileInputs.cache
 C:\Users\mikey\OneDrive\Desktop\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\vegemike.LaDeDaDeDaBoombox.dll
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\bin\Debug\netstandard2.1\vegemike.LaDeDaDeDaBoombox.deps.json
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\bin\Debug\netstandard2.1\vegemike.LaDeDaDeDaBoombox.dll
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.csproj.AssemblyReference.cache
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\MyPluginInfo.cs
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.GeneratedMSBuildEditorConfig.editorconfig
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.AssemblyInfoInputs.cache
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.AssemblyInfo.cs
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\LaDeDaDeDaBoombox.csproj.CoreCompileInputs.cache
+G:\lc modding\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\LaDeDaDeDaBoombox\obj\Debug\netstandard2.1\vegemike.LaDeDaDeDaBoombox.dll

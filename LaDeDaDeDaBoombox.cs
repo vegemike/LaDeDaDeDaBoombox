@@ -84,3 +84,17 @@ class LaDeDaDeDaBoomboxPatch
         }
     }
 }
+
+//stop battery drain
+[HarmonyPatch(typeof(BoomboxItem))]
+[HarmonyPatch("Update", MethodType.Normal)]
+class PreventBoomboxBatteryDrain
+{
+    static void Postfix(BoomboxItem __instance)
+    {
+        //Debug.Log($"[LaDeDaDeDaBoomboxPatch] Preventing battery drain, prev: {__instance.insertedBattery.charge}");
+        __instance.insertedBattery.charge = 1f;
+    }
+}
+
+

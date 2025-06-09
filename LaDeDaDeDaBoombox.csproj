@@ -5,7 +5,7 @@
         <AssemblyName>vegemike.LaDeDaDeDaBoombox</AssemblyName>
         <Product>LaDeDaDeDaBoombox</Product>
         <!-- Change to whatever version you're currently on. -->
-        <Version>1.0.0</Version>
+        <Version>2.3.0</Version>
     </PropertyGroup><ItemGroup>
 </ItemGroup>
 
@@ -113,6 +113,50 @@
       <EmbeddedResource Include="Assets\SOM.ogg" />
       <None Remove="Assets\T.ogg" />
       <EmbeddedResource Include="Assets\T.ogg" />
+      <None Remove="Assets\BM.ogg" />
+      <EmbeddedResource Include="Assets\BM.ogg" />
+      <None Remove="Assets\CYBIS.ogg" />
+      <EmbeddedResource Include="Assets\CYBIS.ogg" />
+      <None Remove="Assets\GPPH.ogg" />
+      <EmbeddedResource Include="Assets\GPPH.ogg" />
+      <None Remove="Assets\IAFTC.ogg" />
+      <EmbeddedResource Include="Assets\IAFTC.ogg" />
+      <None Remove="Assets\IGTIY.ogg" />
+      <EmbeddedResource Include="Assets\IGTIY.ogg" />
+      <None Remove="Assets\IIGMHTY.ogg" />
+      <EmbeddedResource Include="Assets\IIGMHTY.ogg" />
+      <None Remove="Assets\ITAY.ogg" />
+      <EmbeddedResource Include="Assets\ITAY.ogg" />
+      <None Remove="Assets\IY.ogg" />
+      <EmbeddedResource Include="Assets\IY.ogg" />
+      <None Remove="Assets\IYRLM.ogg" />
+      <EmbeddedResource Include="Assets\IYRLM.ogg" />
+      <None Remove="Assets\LA.ogg" />
+      <EmbeddedResource Include="Assets\LA.ogg" />
+      <None Remove="Assets\LOB.ogg" />
+      <EmbeddedResource Include="Assets\LOB.ogg" />
+      <None Remove="Assets\M.ogg" />
+      <EmbeddedResource Include="Assets\M.ogg" />
+      <None Remove="Assets\MTWGA.ogg" />
+      <EmbeddedResource Include="Assets\MTWGA.ogg" />
+      <None Remove="Assets\NWYBG.ogg" />
+      <EmbeddedResource Include="Assets\NWYBG.ogg" />
+      <None Remove="Assets\OOCJ.ogg" />
+      <EmbeddedResource Include="Assets\OOCJ.ogg" />
+      <None Remove="Assets\SGG.ogg" />
+      <EmbeddedResource Include="Assets\SGG.ogg" />
+      <None Remove="Assets\SITR.ogg" />
+      <EmbeddedResource Include="Assets\SITR.ogg" />
+      <None Remove="Assets\TMIYAAHM.ogg" />
+      <EmbeddedResource Include="Assets\TMIYAAHM.ogg" />
+      <None Remove="Assets\TTWA.ogg" />
+      <EmbeddedResource Include="Assets\TTWA.ogg" />
+      <None Remove="Assets\WHDIMW.ogg" />
+      <EmbeddedResource Include="Assets\WHDIMW.ogg" />
+      <None Remove="Assets\WIFIL.ogg" />
+      <EmbeddedResource Include="Assets\WIFIL.ogg" />
+      <None Remove="Assets\WYS.ogg" />
+      <EmbeddedResource Include="Assets\WYS.ogg" />
     </ItemGroup>
 </Project>
 

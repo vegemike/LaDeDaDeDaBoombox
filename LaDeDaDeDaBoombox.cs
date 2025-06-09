@@ -37,7 +37,7 @@ public static class InjectBoomboxSyncManager
             Debug.Log("[InjectBoomboxSyncManager] Creating BoomboxSyncManager GameObject");
             GameObject go = new GameObject("BoomboxSyncManager");
             
-            // Add NetworkObject first
+            // add NetworkObject first
             var netObj = go.AddComponent<NetworkObject>();
             var syncMgr = go.AddComponent<BoomboxSyncManager>();
             Object.DontDestroyOnLoad(go);
@@ -63,7 +63,7 @@ class LaDeDaDeDaBoomboxPatch
     {
         if (!startMusic) return;
 
-        // Stop default playback immediately
+        // stop default playback immediately
         __instance.boomboxAudio.Stop();
         Debug.Log("[LaDeDaDeDaBoomboxPatch] Boombox StartMusic triggered; default audio stopped");
 

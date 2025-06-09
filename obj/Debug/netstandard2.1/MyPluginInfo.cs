@@ -4,6 +4,6 @@ namespace LaDeDaDeDaBoombox
     {
         public const string PLUGIN_GUID = "vegemike.LaDeDaDeDaBoombox";
         public const string PLUGIN_NAME = "LaDeDaDeDaBoombox";
-        public const string PLUGIN_VERSION = "1.0.0";
+        public const string PLUGIN_VERSION = "2.3.0";
     }
 }

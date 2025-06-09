@@ -13,10 +13,10 @@ public class BoomboxSyncManager : MonoBehaviour
 {
     public static BoomboxSyncManager Instance { get; private set; }
 
-    // Prefix used to identify embedded .ogg resources
+    // prefix used to identify embedded .ogg resources
     private string resourcePrefix = "LaDeDaDeDaBoombox.Assets.";
 
-    // List of all embedded .ogg resource names
+    // list of all embedded .ogg resource names
     private List<string> embeddedSongs = new();
 
     private void Awake()
@@ -32,7 +32,7 @@ public class BoomboxSyncManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Debug.Log("[BoomboxSyncManager] Awake: instance created.");
 
-        // Collect all embedded .ogg resource names
+        // collect all embedded .ogg resource names
         var assembly = Assembly.GetExecutingAssembly();
         embeddedSongs = assembly.GetManifestResourceNames()
             .Where(name => name.StartsWith(resourcePrefix) && name.EndsWith(".ogg"))
@@ -40,7 +40,7 @@ public class BoomboxSyncManager : MonoBehaviour
 
         Debug.Log($"[BoomboxSyncManager] Found {embeddedSongs.Count} embedded songs.");
 
-        // Register a handler for the custom message "BoomboxPlay"
+        // register a handler for the custom message "BoomboxPlay"
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.CustomMessagingManager != null)
         {
             NetworkManager.Singleton.CustomMessagingManager.RegisterNamedMessageHandler(
@@ -89,14 +89,14 @@ public class BoomboxSyncManager : MonoBehaviour
             return;
         }
 
-        // Pick a random song
+        // pick a random song
         int chosenIndex = UnityEngine.Random.Range(0, embeddedSongs.Count);
         string chosenSongName = embeddedSongs[chosenIndex];
         ulong boomboxNetworkId = boombox.NetworkObjectId;
 
         Debug.Log($"[BoomboxSyncManager] Host picked song: '{chosenSongName}' (index {chosenIndex}) for Boombox ID {boomboxNetworkId}");
 
-        // Prepare a FastBufferWriter with enough space (string + ulong)
+        // prepare a FastBufferWriter with enough space (string + ulong)
         using var writer = new FastBufferWriter(sizeof(ulong) + 512, Allocator.Temp);
         writer.WriteValueSafe(chosenSongName);
         writer.WriteValueSafe(boomboxNetworkId);
@@ -242,6 +242,11 @@ public class BoomboxSyncManager : MonoBehaviour
 
         clip.name = safeName;
         boombox.boomboxAudio.clip = clip;
+        boombox.boomboxAudio.volume = 1f;                // max volume
+        boombox.boomboxAudio.spatialBlend = 1f;          // fully 3D
+        Debug.Log($"[BoomboxSyncManager] Previous audio maxDistance = {boombox.boomboxAudio.maxDistance}");
+        boombox.boomboxAudio.maxDistance = 200f;         // players can hear from 200m
+        boombox.boomboxAudio.rolloffMode = AudioRolloffMode.Linear;
         boombox.boomboxAudio.Play();
         Debug.Log($"[BoomboxSyncManager] Now playing cached song: '{safeName}'");
     }

@@ -245,8 +245,15 @@ public class BoomboxSyncManager : MonoBehaviour
         boombox.boomboxAudio.volume = 1f;                // max volume
         boombox.boomboxAudio.spatialBlend = 1f;          // fully 3D
         Debug.Log($"[BoomboxSyncManager] Previous audio maxDistance = {boombox.boomboxAudio.maxDistance}");
-        boombox.boomboxAudio.maxDistance = 200f;         // players can hear from 200m
-        boombox.boomboxAudio.rolloffMode = AudioRolloffMode.Linear;
+        boombox.boomboxAudio.maxDistance = 300f;         // players can hear from 300m
+        boombox.boomboxAudio.rolloffMode = AudioRolloffMode.Custom;
+        var curve = new AnimationCurve(
+            new Keyframe(0f, 1f),       // 0m = full volume
+            new Keyframe(30f, 0.6f),    // 30m = 50% volume
+            new Keyframe(50f, 0.5f),    // 50m = 30% volume
+            new Keyframe(300f, 0f)      // 300m = 0% volume
+        );
+        boombox.boomboxAudio.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
         boombox.boomboxAudio.Play();
         Debug.Log($"[BoomboxSyncManager] Now playing cached song: '{safeName}'");
     }

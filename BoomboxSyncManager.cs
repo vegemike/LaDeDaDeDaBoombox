@@ -157,10 +157,10 @@ public class BoomboxSyncManager : MonoBehaviour
     /// </summary>
     private IEnumerator PlayClipFromResource(BoomboxItem boombox, string songName)
     {
-        // Create a safe filename: drop prefix, replace dots with underscores, add .ogg
+        // create a safe filename: drop prefix, replace dots with underscores, add .ogg
         string safeName = songName.Replace(resourcePrefix, "").Replace('.', '_') + ".ogg";
 
-        // Paths: <pluginFolder>/cached_songs/<safeName>
+        // paths: <pluginFolder>/cached_songs/<safeName>
         string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         string cacheFolder = Path.Combine(pluginFolder, "cached_songs");
         string fullPath = Path.Combine(cacheFolder, safeName);
@@ -222,7 +222,7 @@ public class BoomboxSyncManager : MonoBehaviour
             Debug.Log($"[BoomboxSyncManager] Cache hit. Skipping extraction for '{safeName}'");
         }
 
-        // Load the AudioClip via UnityWebRequest
+        // load the AudioClip via UnityWebRequest
         using UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file://" + fullPath, AudioType.OGGVORBIS);
         Debug.Log($"[BoomboxSyncManager] Sending UnityWebRequest for '{fullPath}'");
         yield return request.SendWebRequest();
@@ -251,7 +251,7 @@ public class BoomboxSyncManager : MonoBehaviour
             new Keyframe(0f, 1f),       // 0m = full volume
             new Keyframe(30f, 0.6f),    // 30m = 60% volume
             new Keyframe(50f, 0.5f),    // 50m = 50% volume
-            new Keyframe(500f, 0f)      // 300m = 0% volume
+            new Keyframe(500f, 0f)      // 500m = 0% volume
         );
         boombox.boomboxAudio.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
         boombox.boomboxAudio.Play();

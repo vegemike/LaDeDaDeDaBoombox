@@ -3,6 +3,8 @@ using HarmonyLib;
 using System.Reflection;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [BepInPlugin("com.vegemike.LaDeDaDeDaBoombox", "Boombox Patch", "1.0.0")]
 public class BoomboxMod : BaseUnityPlugin
@@ -11,6 +13,13 @@ public class BoomboxMod : BaseUnityPlugin
     {
         ModMain.Init();
         Debug.Log("[BoomboxMod] Plugin Awake");
+        SceneManager.sceneLoaded += (scene, mode) =>
+        {
+            var guiObj = new GameObject("BoomboxVolumeGUI");
+            GameObject.DontDestroyOnLoad(guiObj);
+            guiObj.AddComponent<BoomboxVolumeGUI>();
+        };
+
     }
 }
 
@@ -92,9 +101,99 @@ class PreventBoomboxBatteryDrain
 {
     static void Postfix(BoomboxItem __instance)
     {
-        //Debug.Log($"[LaDeDaDeDaBoomboxPatch] Preventing battery drain, prev: {__instance.insertedBattery.charge}");
+        //Debug.Log($"[LaDeDaDeDaBoomboxPatch] preventing battery drain, prev: {__instance.insertedBattery.charge}");
         __instance.insertedBattery.charge = 1f;
     }
 }
 
 
+public class BoomboxVolumeGUI : MonoBehaviour
+{
+    private Rect windowRect;
+    private const int WindowId = 0xB00B1E; // arbitrary ID for the GUI window
+    private const float WindowWidth = 300f;
+    private const float WindowHeight = 100f;
+
+    public static bool UIOpen = false;    
+    public static float Volume = 100f;       
+    public static BoomboxItem TargetBoombox; 
+
+    void Start()
+    {
+        // Center the GUI window
+        windowRect = new Rect(
+            (Screen.width  - WindowWidth) / 2f,
+            (Screen.height - WindowHeight) / 2f,
+            WindowWidth,
+            WindowHeight
+        );
+    }
+
+    void Update()
+    {
+        // toggle window with F9
+        if (Keyboard.current?.f9Key.wasPressedThisFrame == true)
+        {
+            UIOpen = !UIOpen;
+            Cursor.visible   = UIOpen;
+            Cursor.lockState = UIOpen ? CursorLockMode.None : CursorLockMode.Locked;
+        }
+
+        // if open and a boombox is targeted, apply the volume
+        if (UIOpen && TargetBoombox != null)
+        {
+            TargetBoombox.boomboxAudio.volume = Volume / 100f;
+        }
+    }
+
+    void OnGUI()
+    {
+        if (!UIOpen) return;
+
+        windowRect = GUI.ModalWindow(WindowId, windowRect, DrawWindowContents, "Boombox Volume");
+    }
+
+    private void DrawWindowContents(int id)
+    {
+        float w = windowRect.width;
+
+        // close button (top right)
+        if (GUI.Button(new Rect(w - 24, 4, 20, 20), "X"))
+        {
+            UIOpen = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        // label and slider
+        GUI.Label(new Rect(10, 30, 110, 20), "Volume (0–100):");
+        float newVol = GUI.HorizontalSlider(new Rect(120, 35, w - 140, 20), Volume, 0f, 100f);
+        if (!Mathf.Approximately(newVol, Volume))
+        {
+            Volume = newVol;
+        }
+
+        // show numeric value
+        GUI.Label(new Rect(w - 50, 30, 40, 20), Volume.ToString("0"));
+
+        GUI.DragWindow(new Rect(0, 0, w, 24)); // drag bar
+    }
+}
+public static class BoomboxVolumeUI
+{
+    public static float VolumeValue = 100f; // default full volume
+    public static bool UIOpen = true;       // to toggle visibility
+    public static BoomboxItem CurrentBoombox; // reference set elsewhere
+}
+
+[HarmonyPatch(typeof(BoomboxItem), "ItemActivate")]
+class BoomboxItem_ItemActivate_Patch
+{
+    static void Postfix(BoomboxItem __instance, bool used)
+    {
+        if (used)
+        {
+
+        }
+    }
+}

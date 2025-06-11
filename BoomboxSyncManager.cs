@@ -157,6 +157,8 @@ public class BoomboxSyncManager : MonoBehaviour
     /// </summary>
     private IEnumerator PlayClipFromResource(BoomboxItem boombox, string songName)
     {
+        BoomboxVolumeGUI.TargetBoombox = boombox;
+        Debug.Log("[BoomboxVolumeGUI] Boombox targeted.");
         // create a safe filename: drop prefix, replace dots with underscores, add .ogg
         string safeName = songName.Replace(resourcePrefix, "").Replace('.', '_') + ".ogg";
 

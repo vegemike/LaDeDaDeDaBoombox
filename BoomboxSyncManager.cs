@@ -257,5 +257,6 @@ public class BoomboxSyncManager : MonoBehaviour
         boombox.boomboxAudio.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
         boombox.boomboxAudio.Play();
         Debug.Log($"[BoomboxSyncManager] Now playing cached song: '{safeName}'");
+        Debug.Log($"[BoomboxSyncManager] {boombox.boomboxAudio.loop}");
     }
 }

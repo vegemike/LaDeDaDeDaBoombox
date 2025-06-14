@@ -5,19 +5,12 @@ using UnityEngine.InputSystem.Controls;
 public class BoomboxVolumeGUI : MonoBehaviour
 {
     public static BoomboxVolumeGUI Instance { get; private set; }
-
-    // 0–100 volume
     public float Volume => volume;
     private float volume = 100f;
-
-    // F9 key control
     private KeyControl f9Key;
-
-    // GUI state
     private bool isOpen = false;
     private Rect windowRect = new Rect(200, 200, 260, 120);
-
-    // Remember cursor state
+    
     private CursorLockMode prevLock;
     private bool prevVisible;
 
@@ -62,13 +55,12 @@ public class BoomboxVolumeGUI : MonoBehaviour
     private void OnGUI()
     {
         if (!isOpen) return;
-
-        // Draw window; returns updated rect after you drag it
+        
         windowRect = GUI.Window(
-            6969,               // window ID
-            windowRect,         // clientRect
-            DrawWindowContents, // function to render inside
-            "Boombox Volume"    // window title
+            6969,               
+            windowRect,         
+            DrawWindowContents, 
+            "Boombox Volume"    
         );
     }
 
@@ -92,8 +84,7 @@ public class BoomboxVolumeGUI : MonoBehaviour
         }
 
         GUILayout.EndVertical();
-
-        // Allow dragging the window by its top 20 px
+        
         GUI.DragWindow(new Rect(0, 0, windowRect.width, 20));
     }
 }

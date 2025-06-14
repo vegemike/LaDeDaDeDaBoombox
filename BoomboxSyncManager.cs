@@ -35,7 +35,7 @@ public class BoomboxSyncManager : MonoBehaviour
         // collect all embedded .ogg resource names
         var assembly = Assembly.GetExecutingAssembly();
         embeddedSongs = assembly.GetManifestResourceNames()
-            .Where(name => name.StartsWith(resourcePrefix) && name.EndsWith(".ogg"))
+            .Where(songName => songName.StartsWith(resourcePrefix) && songName.EndsWith(".ogg"))
             .ToList();
 
         Debug.Log($"[BoomboxSyncManager] Found {embeddedSongs.Count} embedded songs.");
@@ -157,7 +157,6 @@ public class BoomboxSyncManager : MonoBehaviour
     /// </summary>
     private IEnumerator PlayClipFromResource(BoomboxItem boombox, string songName)
     {
-        BoomboxVolumeGUI.TargetBoombox = boombox;
         Debug.Log("[BoomboxVolumeGUI] Boombox targeted.");
         // create a safe filename: drop prefix, replace dots with underscores, add .ogg
         string safeName = songName.Replace(resourcePrefix, "").Replace('.', '_') + ".ogg";
@@ -250,10 +249,10 @@ public class BoomboxSyncManager : MonoBehaviour
         boombox.boomboxAudio.maxDistance = 500f;         // players can hear from 500m
         boombox.boomboxAudio.rolloffMode = AudioRolloffMode.Custom;
         var curve = new AnimationCurve(
-            new Keyframe(0f, 1f),       // 0m = full volume
-            new Keyframe(30f, 0.6f),    // 30m = 60% volume
-            new Keyframe(50f, 0.5f),    // 50m = 50% volume
-            new Keyframe(500f, 0f)      // 500m = 0% volume
+            new Keyframe(0f, 1f),    
+            new Keyframe(30f, 0.6f), 
+            new Keyframe(50f, 0.5f),
+            new Keyframe(500f, 0f)     
         );
         boombox.boomboxAudio.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
         boombox.boomboxAudio.Play();

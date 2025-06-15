@@ -108,6 +108,7 @@ class LaDeDaDeDaBoomboxPatch
 [HarmonyPatch("Update", MethodType.Normal)]
 class PreventBoomboxBatteryDrain
 {
+    public static bool isChoosing = false;
     static void Postfix(BoomboxItem __instance)
     {
         switch (__instance.isPlayingMusic)
@@ -115,9 +116,11 @@ class PreventBoomboxBatteryDrain
             case false:
                 return;
             case true:
-                if (!__instance.boomboxAudio.isPlaying)
+                
+                if (!__instance.boomboxAudio.isPlaying && !isChoosing)
                 {
                     __instance.StartMusic(true);
+                    isChoosing = true;
                 }
                 break;
         }

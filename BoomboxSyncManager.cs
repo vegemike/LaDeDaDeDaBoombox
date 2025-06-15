@@ -257,6 +257,7 @@ public class BoomboxSyncManager : MonoBehaviour
         boombox.boomboxAudio.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
         boombox.boomboxAudio.loop = false;
         boombox.boomboxAudio.Play();
+        HUDManager.Instance.AddChatMessage($"[Boombox Mod] Now playing: {safeName}");
         PreventBoomboxBatteryDrain.isChoosing = false;
         Debug.Log($"[BoomboxSyncManager] Now playing cached song: '{safeName}'");
         Debug.Log($"[BoomboxSyncManager] Looping is set to {boombox.boomboxAudio.loop}");

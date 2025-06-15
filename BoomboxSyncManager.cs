@@ -18,7 +18,20 @@ public class BoomboxSyncManager : MonoBehaviour
 
     // list of all embedded .ogg resource names
     private List<string> embeddedSongs = new();
-
+    public static string ExtractSongName(string resourcePath)
+    {
+        const string prefix = "LaDeDaDeDaBoombox.Assets.";
+        const string suffix = ".ogg";
+        if (!resourcePath.StartsWith(prefix) || !resourcePath.EndsWith(suffix))
+        {
+            return resourcePath;
+        }
+        int startIndex = prefix.Length;
+        int length = resourcePath.Length - prefix.Length - suffix.Length;
+        if (length <= 0) return string.Empty;
+    
+        return resourcePath.Substring(startIndex, length);
+    }
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -148,7 +161,8 @@ public class BoomboxSyncManager : MonoBehaviour
             return;
         }
 
-        // Start coroutine to load & play
+        // start coroutine to load & play
+        PreventBoomboxBatteryDrain.isChoosing = true;
         boombox.StartCoroutine(PlayClipFromResource(boombox, songName));
     }
 
@@ -256,9 +270,10 @@ public class BoomboxSyncManager : MonoBehaviour
         );
         boombox.boomboxAudio.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
         boombox.boomboxAudio.loop = false;
+        PreventBoomboxBatteryDrain.isCustomAudioPlaying = true;
         boombox.boomboxAudio.Play();
-        HUDManager.Instance.AddChatMessage($"[Boombox Mod] Now playing: {safeName}");
-        PreventBoomboxBatteryDrain.isChoosing = false;
+        HUDManager.Instance.AddChatMessage($"[Boombox Mod] Now playing: {ExtractSongName(songName)}");
+        
         Debug.Log($"[BoomboxSyncManager] Now playing cached song: '{safeName}'");
         Debug.Log($"[BoomboxSyncManager] Looping is set to {boombox.boomboxAudio.loop}");
     }

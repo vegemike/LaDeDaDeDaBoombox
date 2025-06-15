@@ -1,3 +1,4 @@
+using System;
 using BepInEx;
 using HarmonyLib;
 using System.Reflection;
@@ -6,6 +7,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 [BepInPlugin("com.vegemike.LaDeDaDeDaBoombox", "Boombox Patch", "1.0.0")]
 public class BoomboxMod : BaseUnityPlugin
@@ -109,19 +111,33 @@ class LaDeDaDeDaBoomboxPatch
 class PreventBoomboxBatteryDrain
 {
     public static bool isChoosing = false;
+    public static bool isCustomAudioPlaying = false;
+
     static void Postfix(BoomboxItem __instance)
     {
+        
+        if (!__instance.boomboxAudio.isPlaying && isCustomAudioPlaying)
+        {
+            Debug.Log("[PreventBoomboxBatteryDrain] Custom audio ended. Resetting flags.");
+            isCustomAudioPlaying = false;
+            isChoosing = false;
+        }
+
         switch (__instance.isPlayingMusic)
         {
             case false:
                 return;
             case true:
                 
-                if (!__instance.boomboxAudio.isPlaying && !isChoosing)
+                if (__instance.isPlayingMusic
+                    && !__instance.boomboxAudio.isPlaying
+                    && !isChoosing
+                    && !isCustomAudioPlaying)
                 {
+                    Debug.Log("[PreventBoomboxBatteryDrain] No song playing, boombox is on. Choosing new song.");
                     __instance.StartMusic(true);
-                    isChoosing = true;
                 }
+
                 break;
         }
 
@@ -141,17 +157,3 @@ class PreventBoomboxBatteryDrain
 
     }
 }
-
-
-/*
-[HarmonyPatch(typeof(BoomboxItem), "ItemActivate")]
-class BoomboxItem_ItemActivate_Patch
-{
-    static void Postfix(BoomboxItem __instance, bool used)
-    {
-        if (used)
-        {
-
-        }
-    }
-}*/

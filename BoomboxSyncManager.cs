@@ -255,8 +255,9 @@ public class BoomboxSyncManager : MonoBehaviour
             new Keyframe(500f, 0f)     
         );
         boombox.boomboxAudio.SetCustomCurve(AudioSourceCurveType.CustomRolloff, curve);
+        boombox.boomboxAudio.loop = false;
         boombox.boomboxAudio.Play();
         Debug.Log($"[BoomboxSyncManager] Now playing cached song: '{safeName}'");
-        Debug.Log($"[BoomboxSyncManager] {boombox.boomboxAudio.loop}");
+        Debug.Log($"[BoomboxSyncManager] Looping is set to {boombox.boomboxAudio.loop}");
     }
 }

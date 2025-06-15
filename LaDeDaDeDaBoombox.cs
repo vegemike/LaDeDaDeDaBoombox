@@ -110,6 +110,18 @@ class PreventBoomboxBatteryDrain
 {
     static void Postfix(BoomboxItem __instance)
     {
+        switch (__instance.isPlayingMusic)
+        {
+            case false:
+                return;
+            case true:
+                if (!__instance.boomboxAudio.isPlaying)
+                {
+                    __instance.StartMusic(true);
+                }
+                break;
+        }
+
         if (__instance.insertedBattery != null)
         {
             __instance.insertedBattery.charge = 1f;
@@ -117,7 +129,7 @@ class PreventBoomboxBatteryDrain
 
         if (__instance.boomboxAudio != null)
         {
-            float targetVol = BoomboxVolumeGUI.Instance != null ? BoomboxVolumeGUI.Instance.Volume / 75f : 1f;
+            float targetVol = BoomboxVolumeGUI.Instance != null ? BoomboxVolumeGUI.Instance.Volume / 50f : 1f;
             if (!Mathf.Approximately(targetVol, __instance.boomboxAudio.volume))
             {
                 __instance.boomboxAudio.volume = targetVol;
